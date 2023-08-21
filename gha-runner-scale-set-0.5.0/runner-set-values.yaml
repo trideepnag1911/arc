@@ -1,0 +1,200 @@
+## githubConfigUrl is the GitHub url for where you want to configure runners
+## ex: https://github.com/myorg/myrepo or https://github.com/myorg
+githubConfigUrl: "https://github.com/test-trideep/test-arc"
+
+## githubConfigSecret is the k8s secrets to use when auth with GitHub API.
+## You can choose to use GitHub App or a PAT token
+githubConfigSecret: pre-defined-secret
+  ### GitHub Apps Configuration
+  ## NOTE: IDs MUST be strings, use quotes
+  #github_app_id: "364452"
+  #github_app_installation_id: "39875963"
+  #github_app_private_key: |
+  #                        -----BEGIN RSA PRIVATE KEY-----
+  #                        MIIEowIBAAKCAQEAprgiAZJ6DpzVHmpgGcaqKIrLydhmurLbEoZngGmzJtcMzXd8
+  #                        GnU5OyAGybtXHI9kwFBFgQnB0bo5tId/DZoZ8/t8pNfI+/ViPIjTE88cuBSs07ZO
+  #                        e0Aqvcj/aUz6ZbONExGqQCL+yNBH433P6pZJJoQqasKcPIuwupGtyndpiytDlsv0
+  #                        LEbPmc0jBAy59pih0bblx3qMaM1ycW5Q9EsQ/1C/vXjdOSJQgqfSEBfyYFXeks5p
+  #                        VYbkvrOwdSqCX4L850XjtC5Cq/CRZF/nKkaDgPPwX6XtnS5yd7xHsBMc/rWZkJbZ
+  #                        mMTrsMBKR+ciW+hqGnQWAOlAZ78JPZmejblSRQIDAQABAoIBAHlrjUi71y0hR425
+  #                        R3g+WdrhCv5cHqVGcYqSXHsHgDR/VpGlvbq/OQk4j/kH+a+RN31geN47ru8Bw9kY
+  #                        /Y14eAJbXDHp/jSSSBNyStgYdQAT/rLKCWp2FyrVYj7ck1jSZaJHsUi4s/qoxlKG
+  #                        ZJCjF293vjS2u3bU/cdDJeFZCoMRuBZW6khMfO2+J36hBKdmvGUtWGQEJaUCuI/f
+  #                        LUsF64MrIviy3YOmOI6StRQf7dbLCJyp8+mkP/v7PtYxmSWVVl3KWlF6CO5rW/6e
+  #                        UHK1DFruagJTvVJUXPPw9QGmDtagLx6l5Cf2RV3KMgjsXSnNdS4OMYqqgUqKiLh4
+  #                        opMjYgECgYEA1/FDhLWmq9aDL/IotpeQ7nCnnQudzcgLs3HWSBi6E4oeSsla6L5/
+  #                        pxD9m/XEKsyahaO38qLA/3YC+OubRq+yiBOfilNXEFcwiClspLrn9QsfmLD1OaGa
+  #                        QY2X4+Yo7ca1D6NNMsRHkbK/JqHlGhTiQ/D7/eEju35KrmMfcdSI/kECgYEAxaVY
+  #                        YAVNI2WapyETzkqvKTy6jca50b983AtBayMvH+22Jswo5/f13sOBUmVuruEv1cxD
+  #                        zbqMms4bMFZQc5bvjeEFw+i6emzBcGcZ1r27m4letIKKC3jJQuxy7YftYORQs/uo
+  #                        DkV21UcBCyyWObeh/xjKv3t0fNQxzDuEZxRbmwUCgYAt7bexmz0m4UonwXadV2FR
+  #                        BY7w3Q6kPP8YHIc58GBrVX4Z4/e89v+JlhiKulwNylS3RdoS9kDcVMpPDTWKdEYh
+  #                        oSLWteEXraO54i2kX8iEGuiOfly59EAt3yLGKybbY98Qw2fg+1RJjd4QJnDm+jgh
+  #                        wTinh+Ikt7jEnHqMqGq2wQKBgFsXirSunM/Mm0ud/h/c4gASgjSnu6rFI4nTEjKL
+  #                        w8NmbsZQ4CWRbdtepfLQ1wN4u/BAtZtS+Ey842ES1v9/OCde56ZUU+Xqy/i/O/Rx
+  #                        +86CsIhnhbIl2DSk/48kT66Ra/SX7uus7kj78aoxwYcWcG4/Aergvl5t+gmUAMD1
+  #                        bAb1AoGBAMOMk1zY+r7WJrDOZtgBz/ckaVl+Z8zBhqUlBakAYSJznDCcb3VXHi/1
+  #                        9E4mrdEHccX6o1/0LLSDCRa1FqvWQGxzqQlEPZpjCDBp3nNdvX08cOsngNsWV5/+
+  #                        DALZxM/nJ7MIaZXqFyVOynuYSQ/IiZbjWPpDIIaFDjgfg+0LWQd7
+  #                        -----END RSA PRIVATE KEY-----
+
+
+  ### GitHub PAT Configuration
+  #github_token: "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"
+## If you have a pre-define Kubernetes secret in the same namespace the gha-runner-scale-set is going to deploy,
+## you can also reference it via `githubConfigSecret: pre-defined-secret`.
+## You need to make sure your predefined secret has all the required secret data set properly.
+##   For a pre-defined secret using GitHub PAT, the secret needs to be created like this:
+##   > kubectl create secret generic pre-defined-secret --namespace=my_namespace --from-literal=github_token='ghp_your_pat'
+##   For a pre-defined secret using GitHub App, the secret needs to be created like this:
+##   > kubectl create secret generic pre-defined-secret --namespace=my_namespace --from-literal=github_app_id=123456 --from-literal=github_app_installation_id=654321 --from-literal=github_app_private_key='-----BEGIN CERTIFICATE-----*******'
+# githubConfigSecret: pre-defined-secret
+
+## proxy can be used to define proxy settings that will be used by the
+## controller, the listener and the runner of this scale set.
+#
+# proxy:
+#   http:
+#     url: http://proxy.com:1234
+#     credentialSecretRef: proxy-auth # a secret with `username` and `password` keys
+#   https:
+#     url: http://proxy.com:1234
+#     credentialSecretRef: proxy-auth # a secret with `username` and `password` keys
+#   noProxy:
+#     - example.com
+#     - example.org
+
+## maxRunners is the max number of runners the auto scaling runner set will scale up to.
+maxRunners: 5
+
+## minRunners is the min number of runners the auto scaling runner set will scale down to.
+minRunners: 1
+
+# runnerGroup: "default"
+
+## name of the runner scale set to create.  Defaults to the helm release name
+# runnerScaleSetName: ""
+
+## A self-signed CA certificate for communication with the GitHub server can be
+## provided using a config map key selector. If `runnerMountPath` is set, for
+## each runner pod ARC will:
+## - create a `github-server-tls-cert` volume containing the certificate
+##   specified in `certificateFrom`
+## - mount that volume on path `runnerMountPath`/{certificate name}
+## - set NODE_EXTRA_CA_CERTS environment variable to that same path
+## - set RUNNER_UPDATE_CA_CERTS environment variable to "1" (as of version
+##   2.303.0 this will instruct the runner to reload certificates on the host)
+##
+## If any of the above had already been set by the user in the runner pod
+## template, ARC will observe those and not overwrite them.
+## Example configuration:
+#
+# githubServerTLS:
+#   certificateFrom:
+#     configMapKeyRef:
+#       name: config-map-name
+#       key: ca.crt
+#   runnerMountPath: /usr/local/share/ca-certificates/
+
+# containerMode:
+#   type: "dind"  ## type can be set to dind or kubernetes
+#   ## the following is required when containerMode.type=kubernetes
+#   kubernetesModeWorkVolumeClaim:
+#     accessModes: ["ReadWriteOnce"]
+#     # For local testing, use https://github.com/openebs/dynamic-localpv-provisioner/blob/develop/docs/quickstart.md to provide dynamic provision volume with storageClassName: openebs-hostpath
+#     storageClassName: "dynamic-blob-storage"
+#     resources:
+#       requests:
+#         storage: 1Gi
+
+## template is the PodSpec for each runner Pod
+template:
+  ## template.spec will be modified if you change the container mode
+  ## with containerMode.type=dind, we will populate the template.spec with following pod spec
+  ## template:
+  ##   spec:
+  ##     initContainers:
+  ##     - name: init-dind-externals
+  ##       image: ghcr.io/actions/actions-runner:latest
+  ##       command: ["cp", "-r", "-v", "/home/runner/externals/.", "/home/runner/tmpDir/"]
+  ##       volumeMounts:
+  ##         - name: dind-externals
+  ##           mountPath: /home/runner/tmpDir
+  ##     containers:
+  ##     - name: runner
+  ##       image: ghcr.io/actions/actions-runner:latest
+  ##       env:
+  ##         - name: DOCKER_HOST
+  ##           value: tcp://localhost:2376
+  ##         - name: DOCKER_TLS_VERIFY
+  ##           value: "1"
+  ##         - name: DOCKER_CERT_PATH
+  ##           value: /certs/client
+  ##       volumeMounts:
+  ##         - name: work
+  ##           mountPath: /home/runner/_work
+  ##         - name: dind-cert
+  ##           mountPath: /certs/client
+  ##           readOnly: true
+  ##     - name: dind
+  ##       image: docker:dind
+  ##       securityContext:
+  ##         privileged: true
+  ##       volumeMounts:
+  ##         - name: work
+  ##           mountPath: /home/runner/_work
+  ##         - name: dind-cert
+  ##           mountPath: /certs/client
+  ##         - name: dind-externals
+  ##           mountPath: /home/runner/externals
+  ##     volumes:
+  ##     - name: work
+  ##       emptyDir: {}
+  ##     - name: dind-cert
+  ##       emptyDir: {}
+  ##     - name: dind-externals
+  ##       emptyDir: {}
+  ######################################################################################################
+  ## with containerMode.type=kubernetes, we will populate the template.spec with following pod spec
+  ## template:
+  ##   spec:
+  ##     containers:
+  ##     - name: runner
+  ##       image: ghcr.io/actions/actions-runner:latest
+  ##       env:
+  ##         - name: ACTIONS_RUNNER_CONTAINER_HOOKS
+  ##           value: /home/runner/k8s/index.js
+  ##         - name: ACTIONS_RUNNER_POD_NAME
+  ##           valueFrom:
+  ##             fieldRef:
+  ##               fieldPath: metadata.name
+  ##         - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
+  ##           value: "true"
+  ##       volumeMounts:
+  ##         - name: work
+  ##           mountPath: /home/runner/_work
+  ##     volumes:
+  ##       - name: work
+  ##         ephemeral:
+  ##           volumeClaimTemplate:
+  ##             spec:
+  ##               accessModes: [ "ReadWriteOnce" ]
+  ##               storageClassName: "local-path"
+  ##               resources:
+  ##                 requests:
+  ##                   storage: 1Gi
+  spec:
+    containers:
+    - name: runner
+      image: ghcr.io/actions/actions-runner:latest
+      command: ["/home/runner/run.sh"]
+
+## Optional controller service account that needs to have required Role and RoleBinding
+## to operate this gha-runner-scale-set installation.
+## The helm chart will try to find the controller deployment and its service account at installation time.
+## In case the helm chart can't find the right service account, you can explicitly pass in the following value
+## to help it finish RoleBinding with the right service account.
+## Note: if your controller is installed to only watch a single namespace, you have to pass these values explicitly.
+# controllerServiceAccount:
+#   namespace: arc-system
+#   name: test-arc-gha-runner-scale-set-controller

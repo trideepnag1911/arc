@@ -1,9 +1,8 @@
-{{- if .Values.flags.watchSingleNamespace }}
+{{- if empty .Values.flags.watchSingleNamespace }}
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
-  name: {{ include "gha-runner-scale-set-controller.managerSingleNamespaceRoleName" . }}
-  namespace: {{ .Values.flags.watchSingleNamespace }}
+  name: {{ include "gha-runner-scale-set-controller.managerClusterRoleName" . }}
 rules:
 - apiGroups:
   - actions.github.com
@@ -35,6 +34,33 @@ rules:
 - apiGroups:
   - actions.github.com
   resources:
+  - autoscalinglisteners
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - actions.github.com
+  resources:
+  - autoscalinglisteners/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - actions.github.com
+  resources:
+  - autoscalinglisteners/finalizers
+  verbs:
+  - patch
+  - update
+- apiGroups:
+  - actions.github.com
+  resources:
   - ephemeralrunnersets
   verbs:
   - create
@@ -50,6 +76,13 @@ rules:
   - ephemeralrunnersets/status
   verbs:
   - get
+  - patch
+  - update
+- apiGroups:
+  - actions.github.com
+  resources:
+  - ephemeralrunnersets/finalizers
+  verbs:
   - patch
   - update
 - apiGroups:
@@ -79,13 +112,6 @@ rules:
   - get
   - patch
   - update
-- apiGroups:
-  - actions.github.com
-  resources:
-  - autoscalinglisteners
-  verbs:
-  - list
-  - watch
 - apiGroups:
   - ""
   resources:
